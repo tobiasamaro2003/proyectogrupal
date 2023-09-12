@@ -17,6 +17,7 @@ public class Universidad68 {
        alu.guardarAlumno(alumno1);
        alu.guardarAlumno(alumno2);
        alu.eliminarAlumno(8);
+       //probando si se guardan los cambios :D
     }
     
 }
