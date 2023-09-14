@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.time.LocalDate;
 import AccesoADatos.AlumnoData;
 import AccesoADatos.Conexion;
+import AccesoADatos.MateriaData;
 import Entidades.Alumno;
+import Entidades.Materia;
 
 public class Universidad68 {
 
@@ -19,8 +21,16 @@ public class Universidad68 {
         //probando si se guardan los cambios :D XDDD
 
         //System.out.println(alu.buscarAlumno(1));
-        System.out.println(alu.buscarAlumnoPorDni(22309875));
-        System.out.println(alu.buscarAlumnoPorDni(22309873));
+      //  System.out.println(alu.buscarAlumnoPorDni(22309875));
+        //System.out.println(alu.buscarAlumnoPorDni(22309873));
+        
+        Materia materia = new Materia(1,"lengua",3 , true);
+        MateriaData mate= new MateriaData();
+        
+       // mate.guardarMateria(materia);
+       // System.out.println(mate.buscarMateria(1));
+       mate.modificarMateria(materia); // para modificarla le tenemos que pasar la materia con datos nuevos para reemplazar
+        
     }
 
 }

@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import Entidades.Alumno;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -110,7 +113,7 @@ public class AlumnoData {
 
     }
 
-    public Alumno buscarAlumnoPorDni(int dni) {
+    public Alumno buscarAlumnoPorDni(int dni) {//                          C PUDO
         Alumno alumno = null;
 
         String sql = "SELECT idAlumno, apellido, nombre, fechaNacimiento FROM alumno WHERE dni=? AND estado = 1";
@@ -137,9 +140,36 @@ public class AlumnoData {
 
         } catch (SQLException ex) {
             //Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "no se pudo abrir la tabla ( ˘ ³˘)♥");
+
         }
 
         return alumno;
     }
 
+    public List<Alumno> listarAlumnos() {
+        List<Alumno> alumnoList = new ArrayList<>();
+        try {
+
+            String sql = "SELECT * FROM alumno where estado=1 ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Alumno alumno = new Alumno();
+                alumno.setIdAlumno(rs.getInt("idAlumno"));
+                alumno.setApellido(rs.getString("apellido"));
+                alumno.setNombre(rs.getString("nombre"));
+                alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+                alumno.setEstado(rs.getBoolean("estado"));// nota ver cuando se usa el is..
+                alumnoList.add(alumno);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            //Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "no se pudo abrir la tabla :D");
+        }
+
+        return alumnoList;
+    }
 }
