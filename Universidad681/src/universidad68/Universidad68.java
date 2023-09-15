@@ -23,13 +23,19 @@ public class Universidad68 {
         //System.out.println(alu.buscarAlumno(1));
       //  System.out.println(alu.buscarAlumnoPorDni(22309875));
         //System.out.println(alu.buscarAlumnoPorDni(22309873));
+        //System.out.println(alu.listarAlumnos());
         
         Materia materia = new Materia(1,"lengua",3 , true);
         MateriaData mate= new MateriaData();
         
-       // mate.guardarMateria(materia);
-       // System.out.println(mate.buscarMateria(1));
-       mate.modificarMateria(materia); // para modificarla le tenemos que pasar la materia con datos nuevos para reemplazar
+       //mate.guardarMateria(materia);
+       //System.out.println(mate.buscarMateria(1));
+       //mate.modificarMateria(materia); // para modificarla le tenemos que pasar la materia con datos nuevos para reemplazar
+       //mate.eliminarMateria(1);
+       //System.out.println(mate.listarMaterias());
+       
+       Inscripcion insc = new Inscripcion();
+       
         
     }
 

@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -46,7 +48,7 @@ public class MateriaData {
         Materia mate = null;
         String sql = "SELECT nombre, año FROM materia WHERE idMateria=? AND estado =1";
         PreparedStatement ps = null;
-        
+
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -65,7 +67,7 @@ public class MateriaData {
 
         } catch (SQLException ex) {
             //Logger.getLogger(MateriaData.class.getName()).log(Level.SEVERE, null, ex);
-           
+
         }
 
         return mate;
@@ -74,23 +76,67 @@ public class MateriaData {
 
     public void modificarMateria(Materia materia) {
         String sql = "UPDATE materia SET nombre=?, año=? WHERE idMateria=? AND estado=1 ";
-        PreparedStatement ps= null; 
-        
+        PreparedStatement ps = null;
+
         try {
-            ps= con.prepareStatement(sql);
-           ps.setString(1, materia.getNombre());
-           ps.setInt(2, materia.getAnio());
-           ps.setInt(3, materia.getIdMateria());
-            int succes=ps.executeUpdate(); 
-            if(succes==1){
+            ps = con.prepareStatement(sql);
+            ps.setString(1, materia.getNombre());
+            ps.setInt(2, materia.getAnio());
+            ps.setInt(3, materia.getIdMateria());
+            int succes = ps.executeUpdate();
+            if (succes == 1) {
                 JOptionPane.showMessageDialog(null, "la materia ha sido modificada ( ˘ ³˘)♥");
             }
-            
+
         } catch (SQLException ex) {
-           // Logger.getLogger(MateriaData.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null,"error al acceder a la tabla materia ( ˘ ³˘)♥");
+            // Logger.getLogger(MateriaData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "error al acceder a la tabla materia ( ˘ ³˘)♥");
         }
-        
+
+    }
+
+    
+
+    public void eliminarMateria(int id) {
+        String sql = "UPDATE materia SET estado=0 WHERE idMateria=?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            if (ps.executeUpdate() == 1) { //Si la tabla se modificó entonces...
+                JOptionPane.showMessageDialog(null, "La materia fue eliminada correctamente");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar a la tabla materia");
+        }
+
+    }
+
+    public List<Materia> listarMaterias() {
+
+        List<Materia> materiaList = new ArrayList<>();
+
+        String sql = "SELECT * FROM materia WHERE estado = 1";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery(); //query se usa para traer la información de la tabla al netbeans. 
+
+            while (rs.next()) {
+                Materia materia = new Materia();
+                materia.setIdMateria(rs.getInt("idMateria"));//Es rs porque es la que tiene la tabla
+                materia.setNombre(rs.getString("nombre"));
+                materia.setAnio(rs.getInt("año")); //lo que está entre comillas siempre es igual al nombe de la base de datos
+                materia.setEstado(rs.getBoolean("estado"));
+                materiaList.add(materia);
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar a la tabla materia");
+        }
+        return materiaList;
     }
 
 }
