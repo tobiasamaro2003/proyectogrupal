@@ -34,7 +34,7 @@ public class MateriaData {
 
             if (rs.next()) {
                 materia.setIdMateria(rs.getInt(1)); //asignamos el numero de la columna que vamos a usar REFIERE A LA BASE DE DATOS 
-                JOptionPane.showMessageDialog(null, "Se cargó exitosamente el alumno");
+                JOptionPane.showMessageDialog(null, "Se cargó exitosamente el materia");
             }
             ps.close();
         } catch (SQLException ex) {

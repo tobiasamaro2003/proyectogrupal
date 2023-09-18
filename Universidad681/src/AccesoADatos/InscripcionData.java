@@ -33,12 +33,16 @@ public class InscripcionData {
             if (rs.next()) {
                 insc.setIdInscripcion(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Se cargó exitosamente la inscripcion");
+            }else{
+                JOptionPane.showMessageDialog(null, "error al cargar el alumno");
             }
 
             ps.close();
         } catch (SQLException ex) {
-            Logger.getLogger(InscripcionData.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(InscripcionData.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "no se pudo ingresar a la tabla inscripción"+ ex.getMessage());
         }
+        
 
     }
 
