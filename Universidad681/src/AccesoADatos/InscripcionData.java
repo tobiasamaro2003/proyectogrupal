@@ -33,14 +33,27 @@ public class InscripcionData {
             ps.setInt(1, insc.getAlumno().getIdAlumno());
             ps.setInt(2, insc.getMateria().getIdMateria());
             ps.setInt(3, insc.getNota());
-            ps.executeUpdate();
 
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                insc.setIdInscripcion(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "Se cargó exitosamente la inscripcion");
-            } else {
-                JOptionPane.showMessageDialog(null, "error al cargar el alumno");
+            List<Inscripcion> ListaInscripciones = new ArrayList<>();
+            ListaInscripciones = obtenerInscripciones();
+            int bandera = 0;//INVESTIGAR
+            for (Inscripcion inscripcion : ListaInscripciones) {
+                if (insc.getAlumno().getIdAlumno() == inscripcion.getAlumno().getIdAlumno() && insc.getMateria().getIdMateria() == inscripcion.getMateria().getIdMateria()) {
+                    bandera = 1;
+                }
+
+            }
+            if (bandera == 0) {//solo se va a actualizar si la bandera es igual a 0. PARA QUE NO SE REPITA LA INSCRIPCION DE UN ALUMNO EN UNA MISMA MATERIA
+                ps.executeUpdate();
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    insc.setIdInscripcion(rs.getInt(1));
+                    JOptionPane.showMessageDialog(null, "Se cargó exitosamente la inscripcion");
+                } else {
+                    JOptionPane.showMessageDialog(null, "error al cargar el alumno");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"No se puede inscribir 2 veces en una misma materia");
             }
 
             ps.close();
@@ -132,4 +145,75 @@ public class InscripcionData {
 
     }
 
+    public List<Materia> obtenerMateriasNoCursadas(int id) {
+
+        List<Materia> MateriaList = new ArrayList<>();
+        String sql = "SELECT * FROM materia WHERE estado=1 AND idMateria not in (SELECT idMateria FROM inscripcion WHERE idAlumno=?)";//nos devuelve las materias n las que el alumno no está inscrpto
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Materia materia = new Materia();
+                materia.setIdMateria(rs.getInt("idMateria"));
+                materia.setNombre(rs.getString("nombre"));
+                materia.setAnio(rs.getInt("año"));
+                MateriaList.add(materia);
+
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            //Logger.getLogger(InscripcionData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "no es posible ingresar a las tablas materia, inscripcion, alumno " + ex);
+        }
+
+        return MateriaList;
+
+    }
+
+    public void borrarInscripcionMateriaAlumno(int idMateria, int idAlumno) {
+        String sql = "DELETE FROM inscripcion WHERE idMateria =? AND idAlumno=?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idMateria);
+            ps.setInt(2, idAlumno);
+            int modificado = ps.executeUpdate();
+
+            if (modificado > 0) {
+                JOptionPane.showMessageDialog(null, "Se ha borrado la inscripcion");
+            } else {
+                JOptionPane.showMessageDialog(null, "No hay materias para eliminar");
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro al ingresar a la tabla" + ex.getMessage());
+
+            //Logger.getLogger(InscripcionData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void actualizarNota(int idAlumno, int idMateria, int nota) {
+        String sql = "UPDATE inscripcion SET nota=? WHERE idAlumno=? AND idMateria=?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, nota);
+            ps.setInt(2, idAlumno);
+            ps.setInt(3, idMateria);
+            int actualizado = ps.executeUpdate();
+
+            if (actualizado > 0) {//si es 0 es porque está vacío o NULL. Si es mayor a 0 es porque está lleno/true(si fuese boolean)
+                JOptionPane.showMessageDialog(null, "Se ha actualizado correctamente la nota");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha podido actualizar la nota");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se ha podido ingresr a la tabla");
+            //Logger.getLogger(InscripcionData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }
