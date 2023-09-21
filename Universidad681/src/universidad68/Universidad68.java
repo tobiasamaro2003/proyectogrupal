@@ -49,11 +49,11 @@ public class Universidad68 {
         //mate.modificarMateria(materia); // para modificarla le tenemos que pasar la materia con datos nuevos para reemplazar
         //mate.eliminarMateria(1);
         //System.out.println(mate.listarMaterias());
-        Materia lengua = mate.buscarMateria(1);
-        Alumno joni = alu.buscarAlumno(7);
-        Inscripcion inscripcion = new Inscripcion(joni, lengua, 9);
+      //  Materia lengua = mate.buscarMateria(1);
+       // Alumno joni = alu.buscarAlumno(7);
+       // Inscripcion inscripcion = new Inscripcion(joni, lengua, 9);
         InscripcionData insc = new InscripcionData();
-        insc.guardarInscripcion(inscripcion);
+        //insc.guardarInscripcion(inscripcion);
         /*
         
         for(Inscripcion inscrip: insc.obtenerInscripciones()){
@@ -75,14 +75,13 @@ public class Universidad68 {
         //System.out.println(insc.obtenerMateriasNoCursadas(2));
         //insc.borrarInscripcionMateriaAlumno(1, 2);
         //insc.actualizarNota(1, 1, 4);
-        
-
-
-        
-       
-       
-        
-
+        /*
+        for(Inscripcion inscri : insc.obtenerAlumnosPorMateria(1)){
+            System.out.println("id Inscripcion: "+ inscri.getIdInscripcion());
+            
+        }
+*/
+        System.out.println(insc.obtenerAlumnosPorMateria(1));
     }
 
 }

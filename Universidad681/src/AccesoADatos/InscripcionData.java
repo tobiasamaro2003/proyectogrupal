@@ -217,16 +217,27 @@ public class InscripcionData {
 
     public List<Alumno> obtenerAlumnosPorMateria(int idMateria) {
         List<Alumno> alumnoList = new ArrayList<>();
-        String sql = "SELECT alumno.apellido, alumno.nombre, alumno.dni,alumno.fechaNacimiento, alumno.idAlumno "
-                + "FROM inscripcion, alumno "
-                + "WHERE idMateria=1;";//preciso sacar información de ambas tablas. Para obtener la infrmación de la tabla alumno tengo que poner: alumno.apellido
+        String sql = "SELECT * FROM alumno JOIN inscripcion ON (alumno.idAlumno = inscripcion.idAlumno)WHERE inscripcion.idMateria = ?;";//preciso sacar información de ambas tablas. Para obtener la infrmación de la tabla alumno tengo que poner: alumno.apellido
         try {
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idMateria);
+            ResultSet rs= ps.executeQuery();
+            while(rs.next()){
+                Alumno alumno = new Alumno ();
+                alumno.setIdAlumno(rs.getInt("idAlumno"));
+                alumno.setApellido(rs.getString("apellido"));
+                alumno.setNombre(rs.getString("nombre"));
+                alumno.setFechaNacimiento(rs.getDate("FechaNacimiento").toLocalDate());
+                alumno.setDni(rs.getInt("dni"));
+                
+                alumnoList.add(alumno);
+            } 
+            ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "error al ingresar a la tabla");
         //Logger.getLogger(InscripcionData.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return null;
+        return alumnoList;
     }
 }
