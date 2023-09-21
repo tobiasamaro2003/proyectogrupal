@@ -52,8 +52,8 @@ public class InscripcionData {
                 } else {
                     JOptionPane.showMessageDialog(null, "error al cargar el alumno");
                 }
-            }else{
-                JOptionPane.showMessageDialog(null,"No se puede inscribir 2 veces en una misma materia");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se puede inscribir 2 veces en una misma materia");
             }
 
             ps.close();
@@ -122,7 +122,8 @@ public class InscripcionData {
 
     public List<Materia> obtenerMateriaCursada(int id) {
         List<Materia> MateriaList = new ArrayList<>();
-        String sql = "SELECT inscripcion.idMateria, nombre, año FROM inscripcion, materia WHERE inscripcion.idMateria=materia.idMateria AND inscripcion.idAlumno =?";
+        String sql = "SELECT inscripcion.idMateria, nombre, año FROM inscripcion, materia "
+                + "WHERE inscripcion.idMateria=materia.idMateria AND inscripcion.idAlumno =?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -133,16 +134,13 @@ public class InscripcionData {
                 materia.setNombre(rs.getString("nombre"));
                 materia.setAnio(rs.getInt("año"));
                 MateriaList.add(materia);
-
             }
             ps.close();
         } catch (SQLException ex) {
             //Logger.getLogger(InscripcionData.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "no es posible ingresar a las tablas materia, inscripcion, alumno " + ex);
         }
-
         return MateriaList;
-
     }
 
     public List<Materia> obtenerMateriasNoCursadas(int id) {
@@ -215,5 +213,20 @@ public class InscripcionData {
             //Logger.getLogger(InscripcionData.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public List<Alumno> obtenerAlumnosPorMateria(int idMateria) {
+        List<Alumno> alumnoList = new ArrayList<>();
+        String sql = "SELECT alumno.apellido, alumno.nombre, alumno.dni,alumno.fechaNacimiento, alumno.idAlumno "
+                + "FROM inscripcion, alumno "
+                + "WHERE idMateria=1;";//preciso sacar información de ambas tablas. Para obtener la infrmación de la tabla alumno tengo que poner: alumno.apellido
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "error al ingresar a la tabla");
+        //Logger.getLogger(InscripcionData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
     }
 }
