@@ -3,7 +3,7 @@ package Entidades;
 public class Inscripcion {
 
     private int idInscripcion;
-    
+
     private Alumno alumno;
     private Materia materia;
     private int nota;
@@ -23,7 +23,6 @@ public class Inscripcion {
         this.materia = materia;
         this.nota = nota;
     }
-
 
     public int getIdInscripcion() {
         return idInscripcion;
@@ -52,18 +51,14 @@ public class Inscripcion {
     public Materia getMateria() {
         return materia;
     }
-    
+
     public void setMateria(Materia materia) {
         this.materia = materia;
     }
-    
+
     @Override
     public String toString() {
         return "Inscripcion{" + "idInscripcion=" + idInscripcion + ", nota=" + nota + ", alumno=" + alumno + ", materia=" + materia + '}';
     }
-    
-    
-
-   
 
 }
