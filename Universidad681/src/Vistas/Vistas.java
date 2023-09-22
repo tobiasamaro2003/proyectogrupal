@@ -45,6 +45,11 @@ public class Vistas extends javax.swing.JFrame {
         JMAlumno.setText("Alumno");
 
         JMIFormularioAlumno.setText("Formulario de Alumno");
+        JMIFormularioAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIFormularioAlumnoActionPerformed(evt);
+            }
+        });
         JMAlumno.add(JMIFormularioAlumno);
 
         jMenuBar1.add(JMAlumno);
@@ -96,6 +101,17 @@ public class Vistas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void JMIFormularioAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIFormularioAlumnoActionPerformed
+        // TODO add your handling code here:
+        
+       JDPEscritorio.removeAll();
+        JDPEscritorio.repaint();
+        VentanaAlumno ventanaAlumno= new VentanaAlumno();
+        ventanaAlumno.setVisible(true);
+        JDPEscritorio.add(ventanaAlumno);
+        JDPEscritorio.moveToFront(ventanaAlumno);
+    }//GEN-LAST:event_JMIFormularioAlumnoActionPerformed
 
     /**
      * @param args the command line arguments
