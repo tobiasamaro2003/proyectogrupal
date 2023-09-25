@@ -7,10 +7,14 @@ package Vistas;
 
 import AccesoADatos.AlumnoData;
 import Entidades.Alumno;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import static java.time.temporal.TemporalQueries.localDate;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -61,6 +65,12 @@ public class VentanaAlumno extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Fecha Nacimiento");
 
+        JTFDocumento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTFDocumentoActionPerformed(evt);
+            }
+        });
+
         JRBEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JRBEstadoActionPerformed(evt);
@@ -70,8 +80,18 @@ public class VentanaAlumno extends javax.swing.JInternalFrame {
         jLabel6.setText("Alumno");
 
         jBNuevo.setText("Nuevo");
+        jBNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBNuevoActionPerformed(evt);
+            }
+        });
 
         jBEliminar.setText("Eliminar");
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
+            }
+        });
 
         jBGuardar.setText("Guardar");
         jBGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -181,22 +201,108 @@ public class VentanaAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JRBEstadoActionPerformed
 
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
-        // TODO add your handling code here:
+        AlumnoData alumnoData = new AlumnoData();
+        Alumno alumnito = new Alumno();
+        alumnito.setDni(Integer.parseInt(JTFDocumento.getText()));//seteo el dni con lo que ingresan en el textField
+        alumnito.setApellido(JTFApellido.getText());
+        alumnito.setNombre(JTFNombre.getText());
+        alumnito.setEstado(JRBEstado.isBorderPainted());
+
+        Instant instant = JDFechaNacimiento.getDate().toInstant();//convertimos el Date en un instant
+        LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();// Convierte el Instant a un LocalDate utilizando la zona horaria deseada (por ejemplo, ZoneId.systemDefault())
+        alumnito.setFechaNacimiento(localDate);
+        if (JTFDocumento.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un documento");
+            return;
+        }
+        if (JTFApellido.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un Apellido");
+            return;
+        }
+        if (JTFNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un Nombre");
+            return;
+        }
+        if (JRBEstado.isSelected()==false) { //REVISAR
+            JOptionPane.showMessageDialog(this, "Debe seleccionar el estado");
+            return;
+        }
+        if (JDFechaNacimiento.getDate()==null) {
+            JOptionPane.showMessageDialog(this, "Ingrese una fecha");
+            return;
+        }
+        alumnoData.guardarAlumno(alumnito);
     }//GEN-LAST:event_jBGuardarActionPerformed
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
         // TODO add your handling code here: // evento boton buscar
-        AlumnoData alumnoData = new AlumnoData();
-        Alumno alumnito = new Alumno();
-        alumnito = alumnoData.buscarAlumnoPorDni(Integer.parseInt(JTFDocumento.getText()));
-        JTFApellido.setText(alumnito.getApellido());
-        JTFNombre.setText(alumnito.getNombre());
-        JRBEstado.setSelected(alumnito.isEstado());
+        try {
 
-        Date date = Date.from(alumnito.getFechaNacimiento().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        JDFechaNacimiento.setDate(date);
-        //  jdfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            AlumnoData alumnoData = new AlumnoData();
+            Alumno alumnito = new Alumno();
+            if (JTFDocumento.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "no debe haber campos vacios");
+                return;
+            }
+            alumnito = alumnoData.buscarAlumnoPorDni(Integer.parseInt(JTFDocumento.getText()));
+            JTFApellido.setText(alumnito.getApellido());
+            JTFNombre.setText(alumnito.getNombre());
+            JRBEstado.setSelected(alumnito.isEstado());
+
+            Date date = Date.from(alumnito.getFechaNacimiento().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            JDFechaNacimiento.setDate(date);
+            //  jdfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "SOLO INGRESE NÚMEROS");
+        } catch (NullPointerException e) {
+
+            JOptionPane.showMessageDialog(null, "INGRESA UN DNI VALIDO");
+
+        }
+
+
     }//GEN-LAST:event_jBBuscarActionPerformed
+
+    private void JTFDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFDocumentoActionPerformed
+
+//        JTFDocumento.addKeyListener (new KeyAdapter() {
+//    
+//            @Override
+//        public void keyTyped(KeyEvent e) {
+//        char c = e.getKeyChar();
+//            if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+//                e.consume(); // Esto evitará que se ingrese el carácter no deseado.
+//               
+//            }
+//        }
+//    }
+//    );
+    }//GEN-LAST:event_JTFDocumentoActionPerformed
+
+    private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
+        JTFApellido.setText("");
+        JTFNombre.setText("");
+        JTFDocumento.setText("");
+        JRBEstado.setSelected(false);
+        JDFechaNacimiento.setDate(null);
+    }//GEN-LAST:event_jBNuevoActionPerformed
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        try {
+            AlumnoData alumnoData = new AlumnoData();
+            Alumno alumnito = new Alumno();
+            if (JTFDocumento.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "no debe haber campos vacios");
+                return;
+            }
+            alumnito = alumnoData.buscarAlumnoPorDni(Integer.parseInt(JTFDocumento.getText()));
+            alumnoData.eliminarAlumno(alumnito.getIdAlumno());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "SOLO INGRESE NÚMEROS");
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "INGRESA UN DNI VALIDO");
+        }
+    }//GEN-LAST:event_jBEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
