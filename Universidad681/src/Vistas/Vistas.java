@@ -57,6 +57,11 @@ public class Vistas extends javax.swing.JFrame {
         JMMateria.setText("Materia");
 
         JMIFormularioMateria.setText("Formulario de Materia");
+        JMIFormularioMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIFormularioMateriaActionPerformed(evt);
+            }
+        });
         JMMateria.add(JMIFormularioMateria);
 
         jMenuBar1.add(JMMateria);
@@ -112,6 +117,18 @@ public class Vistas extends javax.swing.JFrame {
         JDPEscritorio.add(ventanaAlumno);
         JDPEscritorio.moveToFront(ventanaAlumno);
     }//GEN-LAST:event_JMIFormularioAlumnoActionPerformed
+
+    private void JMIFormularioMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIFormularioMateriaActionPerformed
+        // TODO add your handling code here:
+        
+        JDPEscritorio.removeAll();
+        JDPEscritorio.repaint();
+        VentanaMateria ventanaMateria= new VentanaMateria();
+        ventanaMateria.setVisible(true);
+        JDPEscritorio.add(ventanaMateria);
+        JDPEscritorio.moveToFront(ventanaMateria);
+        
+    }//GEN-LAST:event_JMIFormularioMateriaActionPerformed
 
     /**
      * @param args the command line arguments

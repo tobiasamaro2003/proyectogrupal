@@ -28,14 +28,26 @@ public class MateriaData {
             ps.setString(1, materia.getNombre()); //1 refiere al lugar que va a ocupar en el INSERT INTO
             ps.setInt(2, materia.getAnio());
             ps.setBoolean(3, materia.isEstado()); // le asignamos el estado is = esta o no esta
-            ps.executeUpdate();
 
-            ResultSet rs = ps.getGeneratedKeys();
-
-            if (rs.next()) {
-                materia.setIdMateria(rs.getInt(1)); //asignamos el numero de la columna que vamos a usar REFIERE A LA BASE DE DATOS 
-                JOptionPane.showMessageDialog(null, "Se cargó exitosamente el materia");
+            List<Materia> listaMateria = new ArrayList<>();
+            listaMateria = this.listarMaterias();
+            boolean bandera = true;
+            for (Materia lista : listaMateria) {
+                if (materia.getNombre() == lista.getNombre() && materia.getAnio() == lista.getAnio()) {
+                    bandera = false;
+                }
             }
+            if (bandera) {
+                ps.executeUpdate();
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+
+                    materia.setIdMateria(rs.getInt(1)); //asignamos el numero de la columna que vamos a usar REFIERE A LA BASE DE DATOS 
+                    JOptionPane.showMessageDialog(null, "Se cargó exitosamente el materia");
+
+                }
+            }
+
             ps.close();
         } catch (SQLException ex) {
             //Logger.getLogger(MateriaData.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,6 +79,7 @@ public class MateriaData {
 
         } catch (SQLException ex) {
             //Logger.getLogger(MateriaData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "la materia ha sido modificada ( ˘ ³˘)♥");
 
         }
 
@@ -90,12 +103,10 @@ public class MateriaData {
 
         } catch (SQLException ex) {
             // Logger.getLogger(MateriaData.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "error al acceder a la tabla materia ( ˘ ³˘)♥");
+            JOptionPane.showMessageDialog(null, "EEEEEerror al acceder a la tabla materia ( ˘ ³˘)♥" + ex.getMessage());
         }
 
     }
-
-    
 
     public void eliminarMateria(int id) {
         String sql = "UPDATE materia SET estado=0 WHERE idMateria=?";
@@ -106,6 +117,8 @@ public class MateriaData {
 
             if (ps.executeUpdate() == 1) { //Si la tabla se modificó entonces...
                 JOptionPane.showMessageDialog(null, "La materia fue eliminada correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "materia no encontrada");
             }
 
         } catch (SQLException ex) {

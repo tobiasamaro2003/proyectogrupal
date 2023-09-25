@@ -5,6 +5,10 @@
  */
 package Vistas;
 
+import AccesoADatos.MateriaData;
+import Entidades.Materia;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Zona
@@ -59,14 +63,34 @@ public class VentanaMateria extends javax.swing.JInternalFrame {
         });
 
         jbNuevoMateria.setText("Nuevo");
+        jbNuevoMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNuevoMateriaActionPerformed(evt);
+            }
+        });
 
         jbEliminarMateria.setText("Eliminar");
+        jbEliminarMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarMateriaActionPerformed(evt);
+            }
+        });
 
         jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
+            }
+        });
 
         jbSalir.setText("Salir");
 
         jButton5.setText("Buscar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -141,6 +165,82 @@ public class VentanaMateria extends javax.swing.JInternalFrame {
     private void jtNombreMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtNombreMateriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtNombreMateriaActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        Materia materia = new Materia();
+        MateriaData materiaData = new MateriaData();
+        try {
+            if (jtCodigoMateria.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "no debe haber campos vacios");
+                return;
+            }
+            materia = materiaData.buscarMateria(Integer.parseInt(jtCodigoMateria.getText()));
+            jtNombreMateria.setText(materia.getNombre());
+            jrbEstadoMateria.setSelected(materia.isEstado());
+            jtAnioMateria.setText(Integer.toString(materia.getAnio()));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "SOLO INGRESE NÚMEROS");
+        } catch (NullPointerException e) {
+
+            JOptionPane.showMessageDialog(null, "INGRESA UN CÓDIGO VALIDO");
+
+        }
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jbNuevoMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoMateriaActionPerformed
+        // TODO add your handling code here:
+
+        jtCodigoMateria.setText("");
+        jtNombreMateria.setText("");
+        jrbEstadoMateria.setSelected(false);
+        jtAnioMateria.setText("");
+    }//GEN-LAST:event_jbNuevoMateriaActionPerformed
+
+    private void jbEliminarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarMateriaActionPerformed
+        // TODO add your handling code here:
+
+        MateriaData materiaData = new MateriaData();
+        Materia materia = new Materia();
+        try {
+
+            if (jtCodigoMateria.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "no debe haber campos vacios");
+                return;
+            }
+            materia = materiaData.buscarMateria(Integer.parseInt(jtCodigoMateria.getText()));
+            materiaData.eliminarMateria(materia.getIdMateria());
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "SOLO INGRESE NÚMEROS");
+
+        } catch (NullPointerException e) {
+
+            JOptionPane.showMessageDialog(null, "INGRESA UN CÓDIGO VALIDO");
+
+        }
+
+    }//GEN-LAST:event_jbEliminarMateriaActionPerformed
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        // TODO add your handling code here:
+        MateriaData materiaData = new MateriaData();
+
+        if (jtCodigoMateria.getText().isEmpty()) {
+            
+            Materia nuevaMateria = new Materia(jtNombreMateria.getText(), Integer.parseInt(jtAnioMateria.getText()), jrbEstadoMateria.isSelected());
+
+            materiaData.guardarMateria(nuevaMateria);
+
+        } else {
+            Materia materiaModificada = new Materia(Integer.parseInt(jtCodigoMateria.getText()), jtNombreMateria.getText(), Integer.parseInt(jtAnioMateria.getText()), jrbEstadoMateria.isSelected());
+           
+            materiaData.buscarMateria(materiaModificada.getIdMateria());
+            
+            materiaData.modificarMateria(materiaModificada);
+        }
+    }//GEN-LAST:event_jbGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
