@@ -160,6 +160,7 @@ public class AlumnoData {
                 alumno.setIdAlumno(rs.getInt("idAlumno"));
                 alumno.setApellido(rs.getString("apellido"));
                 alumno.setNombre(rs.getString("nombre"));
+                alumno.setDni(rs.getInt("dni"));
                 alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 alumno.setEstado(rs.getBoolean("estado"));// nota ver cuando se usa el is..
                 alumnoList.add(alumno);

@@ -1,10 +1,10 @@
-
 package Vistas;
 
 public class Vistas extends javax.swing.JFrame {
 
     public Vistas() {
         initComponents();
+
     }
 
     /**
@@ -69,21 +69,46 @@ public class Vistas extends javax.swing.JFrame {
         JMAdministracion.setText("Administración");
 
         JMIInscripciones.setText("Manejo de Inscripciones");
+        JMIInscripciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIInscripcionesActionPerformed(evt);
+            }
+        });
         JMAdministracion.add(JMIInscripciones);
 
         JMINotas.setText("Manipulación de notas");
+        JMINotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMINotasActionPerformed(evt);
+            }
+        });
         JMAdministracion.add(JMINotas);
 
         jMenuBar1.add(JMAdministracion);
 
         JMConsultas.setText("Consultas");
+        JMConsultas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMConsultasActionPerformed(evt);
+            }
+        });
 
         JMIAlumnosPorMateria.setText("Alumnos por Materia");
+        JMIAlumnosPorMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIAlumnosPorMateriaActionPerformed(evt);
+            }
+        });
         JMConsultas.add(JMIAlumnosPorMateria);
 
         jMenuBar1.add(JMConsultas);
 
         JMSalir.setText("Salir");
+        JMSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMSalirActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(JMSalir);
 
         setJMenuBar(jMenuBar1);
@@ -109,10 +134,10 @@ public class Vistas extends javax.swing.JFrame {
 
     private void JMIFormularioAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIFormularioAlumnoActionPerformed
         // TODO add your handling code here:
-        
-       JDPEscritorio.removeAll();
+
+        JDPEscritorio.removeAll();
         JDPEscritorio.repaint();
-        VentanaAlumno ventanaAlumno= new VentanaAlumno();
+        VentanaAlumno ventanaAlumno = new VentanaAlumno();
         ventanaAlumno.setVisible(true);
         JDPEscritorio.add(ventanaAlumno);
         JDPEscritorio.moveToFront(ventanaAlumno);
@@ -120,15 +145,57 @@ public class Vistas extends javax.swing.JFrame {
 
     private void JMIFormularioMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIFormularioMateriaActionPerformed
         // TODO add your handling code here:
-        
+
         JDPEscritorio.removeAll();
         JDPEscritorio.repaint();
-        VentanaMateria ventanaMateria= new VentanaMateria();
+        VentanaMateria ventanaMateria = new VentanaMateria();
         ventanaMateria.setVisible(true);
         JDPEscritorio.add(ventanaMateria);
         JDPEscritorio.moveToFront(ventanaMateria);
-        
+
     }//GEN-LAST:event_JMIFormularioMateriaActionPerformed
+
+    private void JMIAlumnosPorMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIAlumnosPorMateriaActionPerformed
+        // TODO add your handling code here:
+        JDPEscritorio.removeAll();
+        JDPEscritorio.repaint();
+        VentanaAlumnoxMateria ventanaAlumnoxMateria = new VentanaAlumnoxMateria();
+        ventanaAlumnoxMateria.setVisible(true);
+        JDPEscritorio.add(ventanaAlumnoxMateria);
+        JDPEscritorio.moveToFront(ventanaAlumnoxMateria);
+
+    }//GEN-LAST:event_JMIAlumnosPorMateriaActionPerformed
+
+    private void JMIInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIInscripcionesActionPerformed
+        // TODO add your handling code here:
+        JDPEscritorio.removeAll();
+        JDPEscritorio.repaint();
+        VentanaInscripciones ventanaInscripciones = new VentanaInscripciones();
+        ventanaInscripciones.setVisible(true);
+        JDPEscritorio.add(ventanaInscripciones);
+        JDPEscritorio.moveToFront(ventanaInscripciones);
+    }//GEN-LAST:event_JMIInscripcionesActionPerformed
+
+    private void JMINotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMINotasActionPerformed
+        // TODO add your handling code here:
+        JDPEscritorio.removeAll();
+        JDPEscritorio.repaint();
+        ManipulacionDeNotas ManipulacionNotas = new ManipulacionDeNotas();
+        ManipulacionNotas.setVisible(true);
+        JDPEscritorio.add(ManipulacionNotas);
+        JDPEscritorio.moveToFront(ManipulacionNotas);
+    }//GEN-LAST:event_JMINotasActionPerformed
+
+    private void JMConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMConsultasActionPerformed
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_JMConsultasActionPerformed
+
+    private void JMSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMSalirActionPerformed
+        // TODO add your handling code here:
+       System.exit(0);
+    }//GEN-LAST:event_JMSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,6 +246,5 @@ public class Vistas extends javax.swing.JFrame {
     private javax.swing.JMenu JMSalir;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
-
 
 }

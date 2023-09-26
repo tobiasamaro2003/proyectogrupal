@@ -312,7 +312,7 @@ public class VentanaAlumno extends javax.swing.JInternalFrame {
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
         // TODO add your handling code here:
-        
+        dispose();
     
     }//GEN-LAST:event_jBSalirActionPerformed
 /*

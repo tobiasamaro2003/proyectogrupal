@@ -43,11 +43,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Manejo de Inscripciones"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIInscripcionesActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMINotas">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Manipulaci&#xf3;n de notas"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMINotasActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -55,11 +61,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Consultas"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMConsultasActionPerformed"/>
+          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="JMIAlumnosPorMateria">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Alumnos por Materia"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIAlumnosPorMateriaActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -67,6 +79,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Salir"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMSalirActionPerformed"/>
+          </Events>
         </Menu>
       </SubComponents>
     </Menu>

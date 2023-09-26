@@ -74,7 +74,7 @@ public class Universidad68 {
         //System.out.println(insc.obtenerMateriaCursada(7));
         //System.out.println(insc.obtenerMateriasNoCursadas(2));
         //insc.borrarInscripcionMateriaAlumno(1, 2);
-        //insc.actualizarNota(1, 1, 4);
+        insc.actualizarNota(1, 1, 8);
         /*
         for(Inscripcion inscri : insc.obtenerAlumnosPorMateria(1)){
             System.out.println("id Inscripcion: "+ inscri.getIdInscripcion());

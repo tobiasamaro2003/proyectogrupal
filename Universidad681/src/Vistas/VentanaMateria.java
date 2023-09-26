@@ -84,6 +84,11 @@ public class VentanaMateria extends javax.swing.JInternalFrame {
         });
 
         jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Buscar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -226,21 +231,35 @@ public class VentanaMateria extends javax.swing.JInternalFrame {
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // TODO add your handling code here:
         MateriaData materiaData = new MateriaData();
+        try {
+            if (jtCodigoMateria.getText().isEmpty()) { //agregar materia 
 
-        if (jtCodigoMateria.getText().isEmpty()) {
-            
-            Materia nuevaMateria = new Materia(jtNombreMateria.getText(), Integer.parseInt(jtAnioMateria.getText()), jrbEstadoMateria.isSelected());
+                Materia nuevaMateria = new Materia(jtNombreMateria.getText(), Integer.parseInt(jtAnioMateria.getText()), jrbEstadoMateria.isSelected());
 
-            materiaData.guardarMateria(nuevaMateria);
+                materiaData.guardarMateria(nuevaMateria);
 
-        } else {
-            Materia materiaModificada = new Materia(Integer.parseInt(jtCodigoMateria.getText()), jtNombreMateria.getText(), Integer.parseInt(jtAnioMateria.getText()), jrbEstadoMateria.isSelected());
-           
-            materiaData.buscarMateria(materiaModificada.getIdMateria());
-            
-            materiaData.modificarMateria(materiaModificada);
+            } else { // modificar materia 
+                Materia materiaModificada = new Materia(Integer.parseInt(jtCodigoMateria.getText()), jtNombreMateria.getText(), Integer.parseInt(jtAnioMateria.getText()), jrbEstadoMateria.isSelected());
+
+                materiaData.buscarMateria(materiaModificada.getIdMateria());
+
+                materiaData.modificarMateria(materiaModificada);
+     
+            }
+      } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "El código sólo debe contener números");
+
+        } catch (NullPointerException e) {
+
+            JOptionPane.showMessageDialog(null, "INGRESA UN CÓDIGO VALIDO");
+
         }
     }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jbSalirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
