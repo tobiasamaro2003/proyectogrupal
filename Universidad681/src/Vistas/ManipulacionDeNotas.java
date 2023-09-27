@@ -7,6 +7,7 @@ package Vistas;
 
 import AccesoADatos.AlumnoData;
 import AccesoADatos.InscripcionData;
+import AccesoADatos.MateriaData;
 import Entidades.Alumno;
 import Entidades.Inscripcion;
 import Entidades.Materia;
@@ -151,13 +152,19 @@ public class ManipulacionDeNotas extends javax.swing.JInternalFrame {
         // TODO add your handling code here:                                        BOTÓN GUARDAR
         InscripcionData inscripcionData = new InscripcionData();
         Inscripcion inscripcion = new Inscripcion();
-        int filaSeleccionada = JTAlumno.getSelectedRow();
+        int filaSeleccionada = JTAlumno.getSelectedRow();//guardando el numero seleccionada de la tabla
         Alumno alumno = (Alumno) JCBSeleccionAlumno.getSelectedItem();
+        
+        List<Materia> materiaList = new ArrayList<>();
+       MateriaData materiaData = new MateriaData();
+         materiaList= materiaData.listarMaterias();
+         
+        
         int idMateria = 0;
         int nota = 0;
         if (filaSeleccionada >= 0) {
-            idMateria = ((int) JTAlumno.getValueAt(filaSeleccionada, 0));
-                    nota = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nota que desea cambiar"));
+            idMateria = (int) (JTAlumno.getValueAt(filaSeleccionada, 0));
+            nota = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nota que desea cambiar"));
 
             //nota = Integer.parseInt((String) JTAlumno.getValueAt(filaSeleccionada, 2));
             System.out.println(alumno.getIdAlumno());

@@ -195,14 +195,15 @@ public class InscripcionData {
 
     public void actualizarNota(int idAlumno, int idMateria, int nota) {
         String sql = "UPDATE inscripcion SET nota=? WHERE idAlumno=? AND idMateria=?";
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setInt(1, nota);
             ps.setInt(2, idAlumno);
             ps.setInt(3, idMateria);
             int actualizado = ps.executeUpdate();
 
-            if (actualizado > 0) {//si es 0 es porque está vacío o NULL. Si es mayor a 0 es porque está lleno/true(si fuese boolean)
+            if (actualizado ==1) {//si es 0 es porque está vacío o NULL. Si es mayor a 0 es porque está lleno/true(si fuese boolean)
                 JOptionPane.showMessageDialog(null, "Se ha actualizado correctamente la nota");
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha podido actualizar la nota");

@@ -207,41 +207,74 @@ public class VentanaAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JRBEstadoActionPerformed
 
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
-        AlumnoData alumnoData = new AlumnoData();
-        Alumno alumnito = new Alumno();
+        try {
+            AlumnoData alumnoData = new AlumnoData();
+            Alumno alumnito = new Alumno();
 
-        alumnito.setDni(Integer.parseInt(JTFDocumento.getText()));//seteo el dni con lo que ingresan en el textField
-        alumnito.setApellido(JTFApellido.getText());
-        alumnito.setNombre(JTFNombre.getText());
-        alumnito.setEstado(JRBEstado.isSelected());
+            
 
-        Instant instant = JDFechaNacimiento.getDate().toInstant();//convertimos el Date en un instant
-        LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();// Convierte el Instant a un LocalDate utilizando la zona horaria deseada (por ejemplo, ZoneId.systemDefault())
-        alumnito.setFechaNacimiento(localDate);
-        
+            if (JTFDocumento.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Ingrese un documento");
+                return;
+            }
 
-        if (JTFDocumento.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ingrese un documento");
-            return;
-        }
-        if (JTFApellido.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ingrese un Apellido");
-            return;
-        }
-        if (JTFNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ingrese un Nombre");
-            return;
-        }
-        if (JRBEstado.isSelected() == false) { //REVISAR
-            JOptionPane.showMessageDialog(this, "Debe seleccionar el estado");
-            return;
-        }
-        if (JDFechaNacimiento.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Ingrese una fecha");
-            return;
-        }
-        alumnoData.guardarAlumno(alumnito);
+            String apellido = JTFApellido.getText();
+            if (JTFApellido.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Ingrese un Apellido");
+                return;
+            } else if (!apellido.matches("^[A-Za-z]+$")) {//VERIFICA/NOS FIJAMOS SI LO QUE SE INGRESA EN EL JTFApellido contiene algo que no sean letras
 
+                JOptionPane.showMessageDialog(this, "Ingrese solo letras en el campo Apellido");
+                return;
+            }
+            alumnito.setApellido(apellido);
+
+            // Validar el campo Nombre
+            String nombre = JTFNombre.getText();
+            if (JTFNombre.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Ingrese un Nombre");
+                return;
+            } else if (!nombre.matches("^[A-Za-z]+$")) {
+                JOptionPane.showMessageDialog(this, "Ingrese solo letras en el campo Nombre");
+                return;
+            }
+            alumnito.setNombre(nombre);
+
+//            if (JTFApellido.getText().isEmpty()) {
+//                JOptionPane.showMessageDialog(this, "Ingrese un Apellido");
+//                return;
+//            }
+//
+//            if (JTFNombre.getText().isEmpty()) {
+//                JOptionPane.showMessageDialog(this, "Ingrese un Nombre");
+//                return;
+//            }
+            if (JRBEstado.isSelected() == false) { //REVISAR
+                JOptionPane.showMessageDialog(this, "Debe seleccionar el estado");
+                return;
+            }
+            if (JDFechaNacimiento.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Ingrese una fecha");
+                return;
+            }
+            alumnito.setDni(Integer.parseInt(JTFDocumento.getText()));//seteo el dni con lo que ingresan en el textField
+            alumnito.setApellido(JTFApellido.getText());
+            alumnito.setNombre(JTFNombre.getText());
+            alumnito.setEstado(JRBEstado.isSelected());
+
+            Instant instant = JDFechaNacimiento.getDate().toInstant();//convertimos el Date en un instant
+            LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();// Convierte el Instant a un LocalDate utilizando la zona horaria deseada (por ejemplo, ZoneId.systemDefault())
+            alumnito.setFechaNacimiento(localDate);
+            
+            alumnoData.guardarAlumno(alumnito);
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "El documento sólo debe contener números");
+        }catch (NullPointerException e) {
+
+            JOptionPane.showMessageDialog(null, "NO DEBE HABER CAMPOS VACÍOS");
+
+        }
 
     }//GEN-LAST:event_jBGuardarActionPerformed
 
