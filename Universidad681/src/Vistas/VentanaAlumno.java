@@ -14,7 +14,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import static java.time.temporal.TemporalQueries.localDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -64,7 +66,7 @@ public class VentanaAlumno extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Estado:");
 
-        jLabel5.setText("Fecha Nacimiento");
+        jLabel5.setText("Fecha Nacimiento:");
 
         JTFDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,23 +143,24 @@ public class VentanaAlumno extends javax.swing.JInternalFrame {
                                         .addComponent(jLabel4)
                                         .addGap(77, 77, 77)
                                         .addComponent(JRBEstado))
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(jLabel3)
                                         .addGap(71, 71, 71)
                                         .addComponent(JTFNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jBBuscar))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(JDFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jBNuevo)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jBEliminar)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jBGuardar)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jBEliminar))
+                                    .addComponent(jLabel5))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(JDFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jBGuardar))
+                                .addGap(84, 84, 84)
                                 .addComponent(jBSalir)))))
                 .addGap(28, 28, 28))
         );
@@ -184,19 +187,16 @@ public class VentanaAlumno extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4)
                     .addComponent(JRBEstado))
                 .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jBNuevo)
-                            .addComponent(jBEliminar)
-                            .addComponent(jBGuardar)
-                            .addComponent(jBSalir))
-                        .addGap(16, 16, 16))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(JDFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(JDFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBNuevo)
+                    .addComponent(jBEliminar)
+                    .addComponent(jBGuardar)
+                    .addComponent(jBSalir))
+                .addGap(16, 16, 16))
         );
 
         pack();
@@ -209,14 +209,17 @@ public class VentanaAlumno extends javax.swing.JInternalFrame {
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
         AlumnoData alumnoData = new AlumnoData();
         Alumno alumnito = new Alumno();
+
         alumnito.setDni(Integer.parseInt(JTFDocumento.getText()));//seteo el dni con lo que ingresan en el textField
         alumnito.setApellido(JTFApellido.getText());
         alumnito.setNombre(JTFNombre.getText());
-        alumnito.setEstado(JRBEstado.isBorderPainted());
+        alumnito.setEstado(JRBEstado.isSelected());
 
         Instant instant = JDFechaNacimiento.getDate().toInstant();//convertimos el Date en un instant
         LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();// Convierte el Instant a un LocalDate utilizando la zona horaria deseada (por ejemplo, ZoneId.systemDefault())
         alumnito.setFechaNacimiento(localDate);
+        
+
         if (JTFDocumento.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingrese un documento");
             return;
@@ -229,15 +232,17 @@ public class VentanaAlumno extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Ingrese un Nombre");
             return;
         }
-        if (JRBEstado.isSelected()==false) { //REVISAR
+        if (JRBEstado.isSelected() == false) { //REVISAR
             JOptionPane.showMessageDialog(this, "Debe seleccionar el estado");
             return;
         }
-        if (JDFechaNacimiento.getDate()==null) {
+        if (JDFechaNacimiento.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Ingrese una fecha");
             return;
         }
         alumnoData.guardarAlumno(alumnito);
+
+
     }//GEN-LAST:event_jBGuardarActionPerformed
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
@@ -313,9 +318,9 @@ public class VentanaAlumno extends javax.swing.JInternalFrame {
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
         // TODO add your handling code here:
         dispose();
-    
+
     }//GEN-LAST:event_jBSalirActionPerformed
-/*
+    /*
      closeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -323,7 +328,7 @@ public class VentanaAlumno extends javax.swing.JInternalFrame {
                 internalFrame.dispose();
             }
         });
-    */
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser JDFechaNacimiento;

@@ -31,7 +31,7 @@ public class MateriaData {
 
             List<Materia> listaMateria = new ArrayList<>();
             listaMateria = this.listarMaterias();
-            boolean bandera = true;
+            boolean bandera = true;                             //validacion de repetición
             for (Materia lista : listaMateria) {
                 if (materia.getNombre() == lista.getNombre() && materia.getAnio() == lista.getAnio()) {
                     bandera = false;

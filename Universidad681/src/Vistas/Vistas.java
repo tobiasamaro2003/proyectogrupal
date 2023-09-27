@@ -1,5 +1,7 @@
 package Vistas;
 
+import javax.swing.JOptionPane;
+
 public class Vistas extends javax.swing.JFrame {
 
     public Vistas() {
@@ -28,6 +30,7 @@ public class Vistas extends javax.swing.JFrame {
         JMConsultas = new javax.swing.JMenu();
         JMIAlumnosPorMateria = new javax.swing.JMenuItem();
         JMSalir = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,11 +107,15 @@ public class Vistas extends javax.swing.JFrame {
         jMenuBar1.add(JMConsultas);
 
         JMSalir.setText("Salir");
-        JMSalir.addActionListener(new java.awt.event.ActionListener() {
+
+        jMenuItem1.setText("Salir");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JMSalirActionPerformed(evt);
+                jMenuItem1ActionPerformed(evt);
             }
         });
+        JMSalir.add(jMenuItem1);
+
         jMenuBar1.add(JMSalir);
 
         setJMenuBar(jMenuBar1);
@@ -192,10 +199,10 @@ public class Vistas extends javax.swing.JFrame {
 
     }//GEN-LAST:event_JMConsultasActionPerformed
 
-    private void JMSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMSalirActionPerformed
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
        System.exit(0);
-    }//GEN-LAST:event_JMSalirActionPerformed
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,6 +252,7 @@ public class Vistas extends javax.swing.JFrame {
     private javax.swing.JMenu JMMateria;
     private javax.swing.JMenu JMSalir;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables
 
 }

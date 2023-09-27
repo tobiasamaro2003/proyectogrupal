@@ -33,16 +33,17 @@ public class AlumnoData {
             ps.setString(3, alumno.getNombre());
             ps.setDate(4, Date.valueOf(alumno.getFechaNacimiento()));
             ps.setBoolean(5, alumno.isEstado());
-            ps.executeUpdate();
 
+            ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                alumno.setIdAlumno(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "Se cargó exitosamente el alumno");
+
+            
+            if(rs.next()){
+                JOptionPane.showMessageDialog(null, "alumno agregado correctamente");
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al cargar  alumno");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno.");
         }
     }
 
@@ -55,7 +56,8 @@ public class AlumnoData {
             ps.setString(2, alumno.getApellido());
             ps.setString(3, alumno.getNombre());
             ps.setDate(4, Date.valueOf(alumno.getFechaNacimiento()));
-            ps.setInt(5, alumno.getIdAlumno());
+            ps.setBoolean(5, alumno.isEstado());
+            ps.setInt(6, alumno.getIdAlumno());
             int exito = ps.executeUpdate();
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Alumno modificado");
