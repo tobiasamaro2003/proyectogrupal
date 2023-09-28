@@ -120,13 +120,13 @@ public class InscripcionData {
         return inscripcionList;
     }
 
-    public List<Materia> obtenerMateriaCursada(int id) {
+    public List<Materia> obtenerMateriaCursada(int idMateria) {
         List<Materia> MateriaList = new ArrayList<>();
         String sql = "SELECT inscripcion.idMateria, nombre, año FROM inscripcion, materia "
                 + "WHERE inscripcion.idMateria=materia.idMateria AND inscripcion.idAlumno =?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(1, idMateria);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Materia materia = new Materia();

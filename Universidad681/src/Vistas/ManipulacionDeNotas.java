@@ -22,11 +22,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ManipulacionDeNotas extends javax.swing.JInternalFrame {
 
-    private DefaultTableModel modelo = new DefaultTableModel();//Importación del DefaultTableModel
-
-    public boolean isCellEditable(int row, int column) {
-        return column == 2;
-    }
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int fila, int columna) {
+            if (columna == 2) { // columna nota
+                return true;
+            }
+            return false;
+        }
+    };//Importación del DefaultTableModel
 
     public ManipulacionDeNotas() {
         initComponents();
@@ -73,6 +76,11 @@ public class ManipulacionDeNotas extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        JTAlumno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTAlumnoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(JTAlumno);
 
         JBGuardar.setText("Guardar");
@@ -170,12 +178,13 @@ public class ManipulacionDeNotas extends javax.swing.JInternalFrame {
 ////            }
 
             int idMateria = 0;
-            int nota = 0;
+            //int nota = 0;
             if (filaSeleccionada >= 0) {
                 idMateria = (int) (JTAlumno.getValueAt(filaSeleccionada, 0));
-                nota = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nota que desea cambiar"));
-
+                // nota = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nota que desea cambiar"));
+                int nota = (Integer) JTAlumno.getValueAt(filaSeleccionada, 2);
                 //nota = Integer.parseInt((String) JTAlumno.getValueAt(filaSeleccionada, 2));
+
                 System.out.println(alumno.getIdAlumno());
                 System.out.println(idMateria);
                 System.out.println(nota);
@@ -194,6 +203,11 @@ public class ManipulacionDeNotas extends javax.swing.JInternalFrame {
         dispose();
 
     }//GEN-LAST:event_JBSalirActionPerformed
+
+    private void JTAlumnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTAlumnoMouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_JTAlumnoMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -226,7 +240,17 @@ private void cargarCabecera() { //Coloca los nombres de la cabecera de la tabla
 
     private void cargarMateria(Inscripcion inscripcion) {
         modelo.addRow(new Object[]{inscripcion.getIdInscripcion(), inscripcion.getMateria().getNombre(), inscripcion.getNota()});
-
+       /*/ InscripcionData inscripcionData = new InscripcionData();
+        //Inscripcion inscripcion = new Inscripcion();
+        List<Materia> listaMateria = new ArrayList<>(); // lista vacia 
+        Alumno alumno = (Alumno) JCBSeleccionAlumno.getSelectedItem();//combo box cargado con alumnos 
+        Materia materia= new Materia();
+        listaMateria = inscripcionData.obtenerMateriaCursada(materia.getIdMateria()); //cargo con la lista de materias inscriptas
+        for (Materia lista : listaMateria) {
+            
+            modelo.addRow(new Object[]{inscripcion.getIdInscripcion(), inscripcion.getMateria().getNombre(), inscripcion.getNota()});
+            
+        }*/
     }
 
 }
