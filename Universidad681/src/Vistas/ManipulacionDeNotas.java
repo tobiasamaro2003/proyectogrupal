@@ -162,7 +162,12 @@ public class ManipulacionDeNotas extends javax.swing.JInternalFrame {
 
             List<Materia> materiaList = new ArrayList<>();
             MateriaData materiaData = new MateriaData();
-            materiaList = materiaData.listarMaterias();
+            materiaList = materiaData.listarMaterias();//materias listadas base
+////            for (Materia materias : materiaList) {
+////                if(inscripcion.getMateria().getNombre()== materias.getNombre()){
+////                    
+////                }
+////            }
 
             int idMateria = 0;
             int nota = 0;
