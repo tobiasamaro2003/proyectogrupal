@@ -168,26 +168,26 @@ public class ManipulacionDeNotas extends javax.swing.JInternalFrame {
             int filaSeleccionada = JTAlumno.getSelectedRow();//guardando el numero seleccionado de la tabla
             Alumno alumno = (Alumno) JCBSeleccionAlumno.getSelectedItem();
 
-            List<Materia> materiaList = new ArrayList<>();
-            MateriaData materiaData = new MateriaData();
-            materiaList = materiaData.listarMaterias();//materias listadas base
-////            for (Materia materias : materiaList) {
-////                if(inscripcion.getMateria().getNombre()== materias.getNombre()){
-////                    
-////                }
-////            }
-
-            int idMateria = 0;
-            //int nota = 0;
+            int idInscripcion = 0;
+            int nota = 0;
+            int idMateria =0;
+            List<Inscripcion> listaInscripciones = new ArrayList<>();
+            InscripcionData insc = new InscripcionData();
             if (filaSeleccionada >= 0) {
-                idMateria = (int) (JTAlumno.getValueAt(filaSeleccionada, 0));
-                // nota = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nota que desea cambiar"));
-                int nota = (Integer) JTAlumno.getValueAt(filaSeleccionada, 2);
-                //nota = Integer.parseInt((String) JTAlumno.getValueAt(filaSeleccionada, 2));
+                idInscripcion = (Integer) (JTAlumno.getValueAt(filaSeleccionada, 0));
+                listaInscripciones=insc.obtenerInscripciones();
+                nota = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nota que desea cambiar"));
+                //int nota = (Integer) JTAlumno.getValueAt(filaSeleccionada, 2);
+                for(Inscripcion inscripcionDeLista : listaInscripciones ){
+                    if(inscripcionDeLista.getIdInscripcion()==idInscripcion){
+                        idMateria=inscripcionDeLista.getMateria().getIdMateria();
+                    }
+                }
+                //nota = (int)(JTAlumno.getValueAt(filaSeleccionada, 2));
 
                 System.out.println(alumno.getIdAlumno());
                 System.out.println(idMateria);
-                System.out.println(nota);
+               System.out.println(nota);
 
                 inscripcionData.actualizarNota(alumno.getIdAlumno(), idMateria, nota);
                 JTAlumno.getSelectedRow();
