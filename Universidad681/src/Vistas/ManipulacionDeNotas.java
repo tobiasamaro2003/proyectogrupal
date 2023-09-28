@@ -24,6 +24,10 @@ public class ManipulacionDeNotas extends javax.swing.JInternalFrame {
 
     private DefaultTableModel modelo = new DefaultTableModel();//Importación del DefaultTableModel
 
+    public boolean isCellEditable(int row, int column) {
+        return column == 2;
+    }
+
     public ManipulacionDeNotas() {
         initComponents();
         cargarCabecera();
@@ -149,34 +153,35 @@ public class ManipulacionDeNotas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JCBSeleccionAlumnoActionPerformed
 
     private void JBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBGuardarActionPerformed
-        // TODO add your handling code here:                                        BOTÓN GUARDAR
-        InscripcionData inscripcionData = new InscripcionData();
-        Inscripcion inscripcion = new Inscripcion();
-        int filaSeleccionada = JTAlumno.getSelectedRow();//guardando el numero seleccionada de la tabla
-        Alumno alumno = (Alumno) JCBSeleccionAlumno.getSelectedItem();
-        
-        List<Materia> materiaList = new ArrayList<>();
-       MateriaData materiaData = new MateriaData();
-         materiaList= materiaData.listarMaterias();
-         
-        
-        int idMateria = 0;
-        int nota = 0;
-        if (filaSeleccionada >= 0) {
-            idMateria = (int) (JTAlumno.getValueAt(filaSeleccionada, 0));
-            nota = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nota que desea cambiar"));
+        //BOTÓN GUARDAR                                  
+        try {
+            InscripcionData inscripcionData = new InscripcionData();
+            Inscripcion inscripcion = new Inscripcion();
+            int filaSeleccionada = JTAlumno.getSelectedRow();//guardando el numero seleccionado de la tabla
+            Alumno alumno = (Alumno) JCBSeleccionAlumno.getSelectedItem();
 
-            //nota = Integer.parseInt((String) JTAlumno.getValueAt(filaSeleccionada, 2));
-            System.out.println(alumno.getIdAlumno());
-            System.out.println(idMateria);
-            System.out.println(nota);
+            List<Materia> materiaList = new ArrayList<>();
+            MateriaData materiaData = new MateriaData();
+            materiaList = materiaData.listarMaterias();
 
-            inscripcionData.actualizarNota(alumno.getIdAlumno(), idMateria, nota);
+            int idMateria = 0;
+            int nota = 0;
+            if (filaSeleccionada >= 0) {
+                idMateria = (int) (JTAlumno.getValueAt(filaSeleccionada, 0));
+                nota = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nota que desea cambiar"));
 
+                //nota = Integer.parseInt((String) JTAlumno.getValueAt(filaSeleccionada, 2));
+                System.out.println(alumno.getIdAlumno());
+                System.out.println(idMateria);
+                System.out.println(nota);
+
+                inscripcionData.actualizarNota(alumno.getIdAlumno(), idMateria, nota);
+                JTAlumno.getSelectedRow();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al actualizar la nota: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        //JTAlumno.getSelectedRow();
-
     }//GEN-LAST:event_JBGuardarActionPerformed
 
     private void JBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBSalirActionPerformed
